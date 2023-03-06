@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class LoginDAO {
     Connection con;    
@@ -14,6 +15,7 @@ public class LoginDAO {
     PreparedStatement ps;
     ResultSet rs;
     
+    //consulta en la base de datos
     public login log(String correo, String pass){
         login l = new login();
         String sql = "SELECT * FROM usuarios WHERE correo = ? AND pass = ?";

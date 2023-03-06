@@ -6,23 +6,35 @@
 package Vista;
 
 import Modelo.Cliente;
+import Modelo.ClienteDao;
+import Modelo.Hotel;
+import Modelo.HotelesDao;
 import Modelo.login;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Zambrano
  */
-public class Sistema extends javax.swing.JFrame {
-
-
+public final class Sistema extends javax.swing.JFrame {
+    Cliente cl = new Cliente();
+    ClienteDao client = new ClienteDao();
+    Hotel htl = new Hotel();
+    HotelesDao htldao = new HotelesDao();
+    DefaultTableModel modelo = new DefaultTableModel();
+    DefaultTableModel tmp = new DefaultTableModel();
     
     public Sistema() {
-        initComponents();
+        initComponents();        
     }
     
     public Sistema (login priv){
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);    
+        ListarCliente();
+        ListarHotel();
     }
 
     /**
@@ -52,21 +64,18 @@ public class Sistema extends javax.swing.JFrame {
         txtPartida = new javax.swing.JTextField();
         txtRetorno = new javax.swing.JTextField();
         jbModificar = new javax.swing.JButton();
-        jbAgregar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVuelo = new javax.swing.JTable();
         jbGuardar = new javax.swing.JButton();
         txtbusca1 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        tblCliente = new javax.swing.JTable();
+        btnGuardarCliente = new javax.swing.JButton();
+        btnModificarCliente = new javax.swing.JButton();
+        btnEliminarCliente = new javax.swing.JButton();
         txtbusca2 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextCed = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -75,23 +84,27 @@ public class Sistema extends javax.swing.JFrame {
         jTextDirec = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextTelf = new javax.swing.JTextField();
+        jTextID = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        btnBuscarCliente = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbHabitacion = new javax.swing.JComboBox<>();
         jTextLoc = new javax.swing.JTextField();
         jTextHotel = new javax.swing.JTextField();
         jTextPrecio = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jButton13 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
+        tblHotel = new javax.swing.JTable();
+        btnBuscarHotel = new javax.swing.JButton();
+        btnGuardarHotel = new javax.swing.JButton();
+        btnModificarHotel = new javax.swing.JButton();
+        btnEliminarHotel = new javax.swing.JButton();
         txtbusca3 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
+        jTextIdHotel = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -153,7 +166,7 @@ public class Sistema extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(202, Short.MAX_VALUE)
+                .addContainerGap(208, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(31, 31, 31)
                 .addComponent(jButton5)
@@ -192,12 +205,12 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jbAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
-        jbAgregar.setText("Nuevo");
-        jbAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAgregarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -225,7 +238,11 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        txtbusca1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtbusca1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -237,10 +254,8 @@ public class Sistema extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtbusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(160, 160, 160)
-                        .addComponent(jbAgregar)
-                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)
+                        .addGap(228, 228, 228)
                         .addComponent(jbModificar)
                         .addGap(24, 24, 24)
                         .addComponent(jbEliminar))
@@ -267,7 +282,7 @@ public class Sistema extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, Short.MAX_VALUE))))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,55 +311,74 @@ public class Sistema extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jbAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtbusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtbusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(39, 39, 39))
         );
 
         jTabbedPane1.addTab("Vuelos", jPanel2);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CÉDULA", "NOMBRE", "DIRECCIÓN", "TELÉFONO"
+                "ID", "CÉDULA", "NOMBRE", "DIRECCIÓN", "TELÉFONO"
             }
-        ));
-        jScrollPane3.setViewportView(jTable3);
-        if (jTable3.getColumnModel().getColumnCount() > 0) {
-            jTable3.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable3.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTable3.getColumnModel().getColumn(2).setPreferredWidth(80);
-            jTable3.getColumnModel().getColumn(3).setPreferredWidth(50);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClienteMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblCliente);
+        if (tblCliente.getColumnModel().getColumnCount() > 0) {
+            tblCliente.getColumnModel().getColumn(0).setResizable(false);
+            tblCliente.getColumnModel().getColumn(1).setResizable(false);
+            tblCliente.getColumnModel().getColumn(1).setPreferredWidth(50);
+            tblCliente.getColumnModel().getColumn(2).setResizable(false);
+            tblCliente.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblCliente.getColumnModel().getColumn(3).setResizable(false);
+            tblCliente.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tblCliente.getColumnModel().getColumn(4).setResizable(false);
+            tblCliente.getColumnModel().getColumn(4).setPreferredWidth(50);
         }
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
-        jButton7.setText("Guardar");
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
-        jButton8.setText("Modificar");
-        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
-        jButton9.setText("Eliminar");
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
-        jButton10.setText("Nuevo");
-        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
+        btnGuardarCliente.setText("Guardar");
+        btnGuardarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnGuardarClienteActionPerformed(evt);
             }
         });
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnModificarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnModificarCliente.setText("Modificar");
+        btnModificarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarClienteActionPerformed(evt);
+            }
+        });
+
+        btnEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
+        btnEliminarCliente.setText("Eliminar");
+        btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarClienteActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("CÉDULA");
 
@@ -353,6 +387,19 @@ public class Sistema extends javax.swing.JFrame {
         jLabel9.setText("DIRECCIÓN");
 
         jLabel8.setText("TELÉFONO");
+
+        jTextID.setEditable(false);
+
+        jLabel16.setText("ID");
+
+        btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnBuscarCliente.setText("Buscar");
+        btnBuscarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -363,34 +410,36 @@ public class Sistema extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(txtbusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscarCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton8)
-                        .addGap(33, 33, 33)
-                        .addComponent(jButton9))
+                        .addComponent(btnModificarCliente)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnEliminarCliente))
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jTextCed, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(34, 34, 34)
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextDirec, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
-                        .addGap(28, 28, 28)
+                        .addGap(33, 33, 33)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jTextTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(54, 54, 54)
-                        .addComponent(jButton7)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addGap(33, 33, 33)
+                        .addComponent(btnGuardarCliente)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,9 +448,11 @@ public class Sistema extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
                                 .addComponent(jLabel6)
+                                .addComponent(jLabel16))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9)
                                 .addComponent(jLabel8)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -409,27 +460,23 @@ public class Sistema extends javax.swing.JFrame {
                             .addComponent(jTextCed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextDirec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jButton7)))
+                        .addComponent(btnGuardarCliente)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(412, 412, 412))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton10))
+                            .addComponent(btnModificarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtbusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtbusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Clientes", jPanel3);
@@ -442,10 +489,10 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel14.setText("PRECIO");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Matrimonial", "Familiar", "Presidencial" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cmbHabitacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Individual", "Matrimonial", "Familiar", "Presidencial" }));
+        cmbHabitacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cmbHabitacionActionPerformed(evt);
             }
         });
 
@@ -455,116 +502,150 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tblHotel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "LOCALIDAD", "NOMBRE", "TIPO DE HABITACIÓN", "PRECIO"
+                "ID", "LOCALIDAD", "NOMBRE", "TIPO DE HABITACIÓN", "PRECIO"
             }
-        ));
-        jScrollPane4.setViewportView(jTable4);
-        if (jTable4.getColumnModel().getColumnCount() > 0) {
-            jTable4.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable4.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTable4.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable4.getColumnModel().getColumn(3).setPreferredWidth(30);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblHotel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHotelMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblHotel);
+        if (tblHotel.getColumnModel().getColumnCount() > 0) {
+            tblHotel.getColumnModel().getColumn(0).setResizable(false);
+            tblHotel.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblHotel.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblHotel.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblHotel.getColumnModel().getColumn(4).setPreferredWidth(30);
         }
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
-        jButton13.setText("Agregar");
-        jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
-        jButton15.setText("Guardar");
-        jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
-        jButton16.setText("Modificar");
-        jButton16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
-        jButton17.setText("Eliminar");
-        jButton17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnBuscarHotel.setText("Buscar");
+        btnBuscarHotel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarHotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
+                btnBuscarHotelActionPerformed(evt);
             }
         });
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnGuardarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
+        btnGuardarHotel.setText("Guardar");
+        btnGuardarHotel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarHotelActionPerformed(evt);
+            }
+        });
+
+        btnModificarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnModificarHotel.setText("Modificar");
+        btnModificarHotel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificarHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarHotelActionPerformed(evt);
+            }
+        });
+
+        btnEliminarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
+        btnEliminarHotel.setText("Eliminar");
+        btnEliminarHotel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarHotelActionPerformed(evt);
+            }
+        });
+
+        jTextIdHotel.setEditable(false);
+
+        jLabel12.setText("ID");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(56, 56, 56)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13))
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14)
-                            .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addComponent(jButton15))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 807, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(txtbusca3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton13)
-                .addGap(26, 26, 26)
-                .addComponent(jButton16)
-                .addGap(27, 27, 27)
-                .addComponent(jButton17)
-                .addGap(39, 39, 39))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(txtbusca3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscarHotel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnModificarHotel)
+                        .addGap(22, 22, 22)
+                        .addComponent(btnEliminarHotel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane4)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jTextIdHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13))
+                                .addGap(33, 33, 33)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel14)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(btnGuardarHotel)))))))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel14)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton15))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jLabel11)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel12)))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextIdHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardarHotel))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton16)
-                        .addComponent(jButton13))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnEliminarHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificarHotel))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtbusca3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel17)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(btnBuscarHotel)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Hoteles", jPanel4);
@@ -640,34 +721,31 @@ public class Sistema extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextCodPaq, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jTextDest, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextCodPaq, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel18))
-                                .addGap(48, 48, 48)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel19)
-                                    .addComponent(jTextDest, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(47, 47, 47)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel23)
-                                        .addGap(129, 129, 129))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(45, 45, 45)
-                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(jButton18))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(25, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addComponent(jLabel23)
+                                .addGap(129, 129, 129))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButton18))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(txtbusca4, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -678,8 +756,8 @@ public class Sistema extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jButton19)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton20)
-                        .addGap(42, 42, 42))))
+                        .addComponent(jButton20)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -708,7 +786,7 @@ public class Sistema extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addComponent(jButton18)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -722,7 +800,7 @@ public class Sistema extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Paquetes", jPanel5);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 890, 480));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 920, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -731,17 +809,17 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+    private void btnEliminarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHotelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton17ActionPerformed
+    }//GEN-LAST:event_btnEliminarHotelActionPerformed
 
     private void jTextHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextHotelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextHotelActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cmbHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHabitacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cmbHabitacionActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         // TODO add your handling code here:
@@ -755,13 +833,9 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jbModificarActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbAgregarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jTextCodPaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodPaqActionPerformed
         // TODO add your handling code here:
@@ -770,6 +844,151 @@ public class Sistema extends javax.swing.JFrame {
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText()) || !"".equals(jTextDirec.getText())) {
+            cl.setDni(Integer.parseInt(jTextCed.getText()));
+            cl.setNombre(jTextNombre.getText());
+            cl.setTelefono(jTextTelf.getText());
+            cl.setDireccion(jTextDirec.getText());
+            client.RegistrarCliente(cl);
+            JOptionPane.showMessageDialog(null, "Cliente Registrado");
+            LimpiarTableCliente();
+            LimpiarCliente();
+            ListarCliente();
+            btnModificarCliente.setEnabled(false);
+            btnEliminarCliente.setEnabled(false);
+            btnGuardarCliente.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
+
+    private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
+        if ("".equals(jTextID.getText())) {
+            JOptionPane.showMessageDialog(null, "seleccione una fila");
+        } else {
+
+            if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText())) {
+                cl.setDni(Integer.parseInt(jTextCed.getText()));
+                cl.setNombre(jTextNombre.getText());
+                cl.setTelefono(jTextTelf.getText());
+                cl.setDireccion(jTextDirec.getText());
+                cl.setId(Integer.parseInt(jTextID.getText()));
+                client.ModificarCliente(cl);
+                JOptionPane.showMessageDialog(null, "Cliente Modificado");
+                LimpiarTableCliente();
+                LimpiarCliente();
+                ListarCliente();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+        }
+    }//GEN-LAST:event_btnModificarClienteActionPerformed
+
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        if (!"".equals(jTextID.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(jTextID.getText());
+                client.EliminarCliente(id);
+                LimpiarTableCliente();
+                LimpiarCliente();
+                ListarCliente();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        btnModificarCliente.setEnabled(true);
+        btnEliminarCliente.setEnabled(true);
+        btnGuardarCliente.setEnabled(false);
+        int fila = tblCliente.rowAtPoint(evt.getPoint());
+        jTextID.setText(tblCliente.getValueAt(fila, 0).toString());
+        jTextCed.setText(tblCliente.getValueAt(fila, 1).toString());
+        jTextNombre.setText(tblCliente.getValueAt(fila, 2).toString());
+        jTextDirec.setText(tblCliente.getValueAt(fila, 3).toString());
+        jTextTelf.setText(tblCliente.getValueAt(fila, 4).toString());        
+    }//GEN-LAST:event_tblClienteMouseClicked
+
+    private void txtbusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusca1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbusca1ActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        if (!"".equals(txtbusca2.getText())) {      
+            LimpiarCliente();
+            LimpiarTableCliente();            
+            BuscarCliente(txtbusca2.getText());
+            //JOptionPane.showMessageDialog(null, "Coincidencias");
+        } else{
+            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+        }
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnGuardarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarHotelActionPerformed
+        if (!"".equals(jTextLoc.getText()) || !"".equals(jTextHotel.getText()) || !"".equals(cmbHabitacion.getSelectedItem()) || !"".equals(jTextPrecio.getText())) {
+            htl.setLocalidad(jTextLoc.getText());
+            htl.setNombre(jTextHotel.getText());
+            htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
+            htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
+            htldao.RegistrarHoteles(htl);
+            JOptionPane.showMessageDialog(null, "Hotel Registrado");
+            LimpiarTableHotel();
+            LimpiarHotel();
+            ListarHotel();
+            btnModificarHotel.setEnabled(false);
+            btnEliminarHotel.setEnabled(false);
+            btnGuardarHotel.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarHotelActionPerformed
+
+    private void btnModificarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarHotelActionPerformed
+        if ("".equals(jTextIdHotel.getText())) {
+            JOptionPane.showMessageDialog(null, "seleccione una fila");
+        } else {
+
+            if (!"".equals(jTextLoc.getText()) || !"".equals(jTextHotel.getText()) || !"".equals(cmbHabitacion.getSelectedItem()) || !"".equals(jTextPrecio.getText())) {
+                htl.setLocalidad(jTextLoc.getText());
+                htl.setNombre(jTextHotel.getText());
+                htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
+                htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
+                htl.setId(Integer.parseInt(jTextIdHotel.getText()));
+                htldao.ModificarHoteles(htl);
+                JOptionPane.showMessageDialog(null, "Hotel Modificado");
+                LimpiarTableHotel();
+                LimpiarHotel();
+                ListarHotel();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+        }
+    }//GEN-LAST:event_btnModificarHotelActionPerformed
+
+    private void tblHotelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHotelMouseClicked
+        btnModificarHotel.setEnabled(true);
+        btnEliminarHotel.setEnabled(true);
+        btnGuardarHotel.setEnabled(false);
+        int fila = tblHotel.rowAtPoint(evt.getPoint());
+        jTextIdHotel.setText(tblHotel.getValueAt(fila, 0).toString());
+        jTextLoc.setText(tblHotel.getValueAt(fila, 1).toString());
+        jTextHotel.setText(tblHotel.getValueAt(fila, 2).toString());
+        cmbHabitacion.setSelectedItem(tblHotel.getValueAt(fila, 3).toString());
+        jTextPrecio.setText(tblHotel.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tblHotelMouseClicked
+
+    private void btnBuscarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHotelActionPerformed
+        if (!"".equals(txtbusca3.getText())) {
+        LimpiarHotel();
+        LimpiarTableHotel();
+        BuscarHotel(txtbusca3.getText());
+        } else{
+            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+        }
+        
+    }//GEN-LAST:event_btnBuscarHotelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -807,23 +1026,24 @@ public class Sistema extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscarCliente;
+    private javax.swing.JButton btnBuscarHotel;
+    private javax.swing.JButton btnEliminarCliente;
+    private javax.swing.JButton btnEliminarHotel;
+    private javax.swing.JButton btnGuardarCliente;
+    private javax.swing.JButton btnGuardarHotel;
+    private javax.swing.JButton btnModificarCliente;
+    private javax.swing.JButton btnModificarHotel;
+    private javax.swing.JComboBox<String> cmbHabitacion;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
@@ -832,8 +1052,7 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -859,22 +1078,23 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTextField jTextCed;
     private javax.swing.JTextField jTextCodPaq;
     private javax.swing.JTextField jTextDest;
     private javax.swing.JTextField jTextDirec;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextHotel;
+    private javax.swing.JTextField jTextID;
+    private javax.swing.JTextField jTextIdHotel;
     private javax.swing.JTextField jTextLoc;
     private javax.swing.JTextField jTextNombre;
     private javax.swing.JTextField jTextPrecio;
     private javax.swing.JTextField jTextTelf;
-    private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbModificar;
+    private javax.swing.JTable tblCliente;
+    private javax.swing.JTable tblHotel;
     private javax.swing.JTable tblVuelo;
     private javax.swing.JTextField txtCod;
     private javax.swing.JTextField txtDestino;
@@ -885,4 +1105,97 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtbusca3;
     private javax.swing.JTextField txtbusca4;
     // End of variables declaration//GEN-END:variables
+
+    private void LimpiarCliente() {
+        jTextCed.setText("");
+        jTextNombre.setText("");
+        jTextTelf.setText("");
+        jTextDirec.setText("");
+        jTextID.setText("");
+    }
+    
+    private void LimpiarHotel() {
+        jTextLoc.setText("");
+        jTextHotel.setText("");
+        cmbHabitacion.setSelectedItem("Individual");
+        jTextPrecio.setText("");
+        jTextIdHotel.setText("");
+    }
+
+    private void ListarCliente() {
+        List<Cliente> ListarCl = client.ListarCliente();
+        modelo = (DefaultTableModel) tblCliente.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarCl.size(); i++) {
+            ob[0] = ListarCl.get(i).getId();
+            ob[1] = ListarCl.get(i).getDni();
+            ob[2] = ListarCl.get(i).getNombre();
+            ob[3] = ListarCl.get(i).getDireccion();
+            ob[4] = ListarCl.get(i).getTelefono();
+            modelo.addRow(ob);
+        }
+        tblCliente.setModel(modelo);
+    }
+    
+    private void BuscarCliente(String buscar) {
+        List<Cliente> ListarCl = client.buscarCliente(buscar);
+        modelo = (DefaultTableModel) tblCliente.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarCl.size(); i++) {
+            ob[0] = ListarCl.get(i).getId();
+            ob[1] = ListarCl.get(i).getDni();
+            ob[2] = ListarCl.get(i).getNombre();
+            ob[3] = ListarCl.get(i).getDireccion();
+            ob[4] = ListarCl.get(i).getTelefono();
+            modelo.addRow(ob);
+        }
+        tblCliente.setModel(modelo);
+    }
+    
+    private void ListarHotel() {
+        List<Hotel> ListarHtl = htldao.ListarHoteles();
+        modelo = (DefaultTableModel) tblHotel.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarHtl.size(); i++) {
+            ob[0] = ListarHtl.get(i).getId();
+            ob[1] = ListarHtl.get(i).getLocalidad();
+            ob[2] = ListarHtl.get(i).getNombre();
+            ob[3] = ListarHtl.get(i).getHabitacion();
+            ob[4] = ListarHtl.get(i).getPrecio();
+            modelo.addRow(ob);
+        }
+        tblHotel.setModel(modelo);
+    }
+    
+    private void BuscarHotel(String buscar) {
+        List<Hotel> ListarHtl = htldao.BuscarHoteles(buscar);
+        modelo = (DefaultTableModel) tblHotel.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarHtl.size(); i++) {
+            ob[0] = ListarHtl.get(i).getId();
+            ob[1] = ListarHtl.get(i).getLocalidad();
+            ob[2] = ListarHtl.get(i).getNombre();
+            ob[3] = ListarHtl.get(i).getHabitacion();
+            ob[4] = ListarHtl.get(i).getPrecio();
+            modelo.addRow(ob);
+        }
+        tblHotel.setModel(modelo);
+    }
+    
+
+    private void LimpiarTableCliente() {
+        DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    private void LimpiarTableHotel() {
+        DefaultTableModel modelo=(DefaultTableModel) tblHotel.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
 }

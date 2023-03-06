@@ -16,7 +16,7 @@ public class Agencia_Viaje {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // El sistema inicia con la ventana de Login
         Login lg = new Login();
         lg.setVisible(true);
     }
