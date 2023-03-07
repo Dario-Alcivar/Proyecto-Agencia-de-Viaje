@@ -605,6 +605,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextCed">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextCedActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -1138,9 +1141,8 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
+                  <StringArray count="1">
                     <StringItem index="0" value="Guayaquil"/>
-                    <StringItem index="1" value="Quito"/>
                   </StringArray>
                 </Property>
               </Properties>

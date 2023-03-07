@@ -436,6 +436,12 @@ public final class Sistema extends javax.swing.JFrame {
 
         jLabel6.setText("CÉDULA");
 
+        jTextCed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextCedActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("NOMBRE");
 
         jLabel9.setText("DIRECCIÓN");
@@ -746,7 +752,7 @@ public final class Sistema extends javax.swing.JFrame {
         });
 
         jcomboxSalida.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jcomboxSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guayaquil", "Quito" }));
+        jcomboxSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guayaquil" }));
 
         jcomboxTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jcomboxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Familiar", "Relax", "Diversión", "AquaPark", "Cultural", "Aventura" }));
@@ -1204,6 +1210,12 @@ public final class Sistema extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jTabbedPane1.setSelectedIndex(3);
+        LimpiarTablePaquetes();
+        LimpiarPaquetes();
+        ListarPaquetes();
+        btnGuardarPaquetes.setEnabled(true);
+        btnEliminarPaquetes.setEnabled(true);
+        btnModificarPaquetes.setEnabled(true);
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -1257,9 +1269,9 @@ public final class Sistema extends javax.swing.JFrame {
             BuscarPaquetes(txtbuscaPaquetes.getText());
         } else{
             JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
-            LimpiarTableHotel();              
-            LimpiarHotel();
-            ListarHotel();
+            LimpiarTablePaquetes();              
+            LimpiarPaquetes();
+            ListarPaquetes();
         }
         btnModificarPaquetes.setEnabled(true);
         btnEliminarPaquetes.setEnabled(true);
@@ -1292,11 +1304,16 @@ public final class Sistema extends javax.swing.JFrame {
         btnEliminarPaquetes.setEnabled(true);
         btnGuardarPaquetes.setEnabled(false);
         int fila = tblPaquetes.rowAtPoint(evt.getPoint());
-        jTextDest.setText(tblPaquetes.getValueAt(fila, 0).toString());
-        jcomboxSalida.setSelectedItem(tblPaquetes.getValueAt(fila, 1).toString());
-        jTextDuracion.setText(tblPaquetes.getValueAt(fila, 2).toString());
-        jcomboxTipo.setSelectedItem(tblPaquetes.getValueAt(fila, 3).toString());
+        jTextCodPaq.setText(tblPaquetes.getValueAt(fila, 0).toString());
+        jTextDest.setText(tblPaquetes.getValueAt(fila, 1).toString());
+        jcomboxSalida.setSelectedItem(tblPaquetes.getValueAt(fila, 2).toString());
+        jTextDuracion.setText(tblPaquetes.getValueAt(fila, 3).toString());
+        jcomboxTipo.setSelectedItem(tblPaquetes.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tblPaquetesMouseClicked
+
+    private void jTextCedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextCedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1575,7 +1592,7 @@ public final class Sistema extends javax.swing.JFrame {
     private void BuscarPaquetes(String buscar) {
     List<Paquetes> ListarPq = pqDao.buscarPaquetes(buscar);
         modelo = (DefaultTableModel) tblPaquetes.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[5];
         for (int i = 0; i < ListarPq.size(); i++) {
             ob[0] = ListarPq.get(i).getId();
             ob[1] = ListarPq.get(i).getDestino();
@@ -1589,7 +1606,7 @@ public final class Sistema extends javax.swing.JFrame {
     private void ListarPaquetes() {
         List<Paquetes> ListarPq = pqDao.ListarPaquetes();
         modelo = (DefaultTableModel) tblPaquetes.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[5];
         for (int i = 0; i < ListarPq.size(); i++) {
             ob[0] = ListarPq.get(i).getId();
             ob[1] = ListarPq.get(i).getDestino();

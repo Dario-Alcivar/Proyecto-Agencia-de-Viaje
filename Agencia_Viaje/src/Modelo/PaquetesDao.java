@@ -55,6 +55,7 @@ public class PaquetesDao {
            
            while (rs.next()) {               
                Paquetes pq = new Paquetes();
+               pq.setId(rs.getInt("id"));
                pq.setDestino(rs.getString("destino"));
                pq.setSalida(rs.getString("salida"));
                pq.setDuracion(rs.getInt("duracion"));
@@ -118,6 +119,7 @@ public class PaquetesDao {
            rs = ps.executeQuery();
            while (rs.next()) {               
                Paquetes pq = new Paquetes();
+               pq.setId(rs.getInt("id"));
                pq.setDestino(rs.getString("destino"));
                pq.setSalida(rs.getString("salida"));
                pq.setDuracion(rs.getInt("duracion"));
