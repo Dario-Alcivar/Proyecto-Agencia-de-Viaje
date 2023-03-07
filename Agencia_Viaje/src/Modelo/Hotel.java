@@ -6,11 +6,11 @@ package Modelo;
 
 /**
  *
- * @author UsuarioPC
+ * @author UsuarioPC 
  */
 public class Hotel {
     private int id;
-    private String ruc;
+    private int numeroHabitacion;
     private String localidad;
     private String habitacion;
     private float precio;
@@ -22,9 +22,9 @@ public class Hotel {
         
     }
 
-    public Hotel(int id, String ruc, String localidad, String habitacion, float precio, String nombre, String telefono, String direccion) {
+    public Hotel(int id, int numeroHabitacion, String localidad, String habitacion, float precio, String nombre, String telefono, String direccion) {
         this.id = id;
-        this.ruc = ruc;
+        this.numeroHabitacion = numeroHabitacion;
         this.localidad = localidad;
         this.habitacion = habitacion;
         this.precio = precio;
@@ -41,12 +41,12 @@ public class Hotel {
         this.id = id;
     }
 
-    public String getRuc() {
-        return ruc;
+    public int getNumeroHabitacion() {
+        return numeroHabitacion;
     }
 
-    public void setRuc(String ruc) {
-        this.ruc = ruc;
+    public void setNumeroHabitacion(int numeroHabitacion) {
+        this.numeroHabitacion = numeroHabitacion;
     }
 
     public String getLocalidad() {

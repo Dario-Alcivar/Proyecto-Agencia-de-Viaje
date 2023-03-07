@@ -9,22 +9,33 @@ import Modelo.Cliente;
 import Modelo.ClienteDao;
 import Modelo.Hotel;
 import Modelo.HotelesDao;
+import Modelo.Paquetes;
+import Modelo.PaquetesDao;
+import Modelo.Vuelos;
+import Modelo.VueloDAO;
 import Modelo.login;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Zambrano
+ * @author Zambrano - DarioA
  */
 public final class Sistema extends javax.swing.JFrame {
     Cliente cl = new Cliente();
     ClienteDao client = new ClienteDao();
     Hotel htl = new Hotel();
     HotelesDao htldao = new HotelesDao();
+    Vuelos vl = new Vuelos();
+    VueloDAO vldao = new VueloDAO();    
+    Paquetes pq = new Paquetes();
+    PaquetesDao pqDao = new PaquetesDao();
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel tmp = new DefaultTableModel();
+    
     
     public Sistema() {
         initComponents();        
@@ -35,6 +46,9 @@ public final class Sistema extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);    
         ListarCliente();
         ListarHotel();
+        ListarVuelo();
+        ListarPaquetes();
+        
     }
 
     /**
@@ -58,17 +72,17 @@ public final class Sistema extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jbEliminar = new javax.swing.JButton();
-        txtCod = new javax.swing.JTextField();
-        txtDestino = new javax.swing.JTextField();
-        txtPartida = new javax.swing.JTextField();
-        txtRetorno = new javax.swing.JTextField();
-        jbModificar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
+        btnEliminarVuelo = new javax.swing.JButton();
+        txtIdVuelo = new javax.swing.JTextField();
+        txtDestinoVuelo = new javax.swing.JTextField();
+        txtPartidaVuelo = new javax.swing.JTextField();
+        txtRetornoVuelo = new javax.swing.JTextField();
+        btnModificarVuelo = new javax.swing.JButton();
+        btnBuscarVuelo = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVuelo = new javax.swing.JTable();
-        jbGuardar = new javax.swing.JButton();
-        txtbusca1 = new javax.swing.JTextField();
+        btnGuardarVuelos = new javax.swing.JButton();
+        txtbuscarVuelo = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblCliente = new javax.swing.JTable();
@@ -84,7 +98,7 @@ public final class Sistema extends javax.swing.JFrame {
         jTextDirec = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextTelf = new javax.swing.JTextField();
-        jTextID = new javax.swing.JTextField();
+        jTextIdCliente = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         btnBuscarCliente = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -105,25 +119,26 @@ public final class Sistema extends javax.swing.JFrame {
         txtbuscaHotel = new javax.swing.JTextField();
         jTextIdHotel = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        jTextNumeroHabitacion = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        txtbusca4 = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
+        txtbuscaPaquetes = new javax.swing.JTextField();
         jTextCodPaq = new javax.swing.JTextField();
         jTextDest = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jButton14 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
+        jcomboxSalida = new javax.swing.JComboBox<>();
+        jTextDuracion = new javax.swing.JTextField();
+        jcomboxTipo = new javax.swing.JComboBox<>();
+        btnBuscarPaquetes = new javax.swing.JButton();
+        btnGuardarPaquetes = new javax.swing.JButton();
+        btnModificarPaquetes = new javax.swing.JButton();
+        btnEliminarPaquetes = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPaquetes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -150,14 +165,29 @@ public final class Sistema extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/hotel.png"))); // NOI18N
         jButton2.setText("  Hoteles");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/paquetes.png"))); // NOI18N
         jButton3.setText("  Paquetes");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/cliente.png"))); // NOI18N
         jButton5.setText("  Clientes");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -192,30 +222,36 @@ public final class Sistema extends javax.swing.JFrame {
 
         jLabel5.setText("RETORNO");
 
-        jbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
-        jbEliminar.setText(" Eliminar");
-
-        txtCod.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarVuelo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
+        btnEliminarVuelo.setText(" Eliminar");
+        btnEliminarVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodActionPerformed(evt);
+                btnEliminarVueloActionPerformed(evt);
             }
         });
 
-        jbModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
-        jbModificar.setText("  Modificar");
-        jbModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+        txtIdVuelo.setEditable(false);
+        txtIdVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbModificarActionPerformed(evt);
+                txtIdVueloActionPerformed(evt);
             }
         });
 
-        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
-        btnBuscar.setText("Buscar");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificarVuelo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnModificarVuelo.setText("  Modificar");
+        btnModificarVuelo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificarVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnModificarVueloActionPerformed(evt);
+            }
+        });
+
+        btnBuscarVuelo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnBuscarVuelo.setText("Buscar");
+        btnBuscarVuelo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarVuelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarVueloActionPerformed(evt);
             }
         });
 
@@ -224,9 +260,22 @@ public final class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "CÓDIGO", "DESCRIPCION", "PARTIDA", "RETORNO"
+                "CÓDIGO", "DESTINO", "PARTIDA", "RETORNO"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblVuelo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVueloMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblVuelo);
         if (tblVuelo.getColumnModel().getColumnCount() > 0) {
             tblVuelo.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -235,17 +284,17 @@ public final class Sistema extends javax.swing.JFrame {
             tblVuelo.getColumnModel().getColumn(3).setPreferredWidth(30);
         }
 
-        jbGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
-        jbGuardar.setText("  Guardar");
-        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardarVuelos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
+        btnGuardarVuelos.setText("  Guardar");
+        btnGuardarVuelos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbGuardarActionPerformed(evt);
+                btnGuardarVuelosActionPerformed(evt);
             }
         });
 
-        txtbusca1.addActionListener(new java.awt.event.ActionListener() {
+        txtbuscarVuelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtbusca1ActionPerformed(evt);
+                txtbuscarVueloActionPerformed(evt);
             }
         });
 
@@ -257,37 +306,37 @@ public final class Sistema extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtbusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscarVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar)
+                        .addComponent(btnBuscarVuelo)
                         .addGap(228, 228, 228)
-                        .addComponent(jbModificar)
+                        .addComponent(btnModificarVuelo)
                         .addGap(24, 24, 24)
-                        .addComponent(jbEliminar))
+                        .addComponent(btnEliminarVuelo))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtIdVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2))
                             .addGap(55, 55, 55)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDestinoVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3))
                             .addGap(56, 56, 56)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel4)
-                                .addComponent(txtPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPartidaVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(61, 61, 61)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel5)
-                                .addComponent(txtRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtRetornoVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbGuardar)
+                            .addComponent(btnGuardarVuelos)
                             .addGap(14, 14, 14))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, Short.MAX_VALUE))))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,23 +351,23 @@ public final class Sistema extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPartida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtRetorno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtIdVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDestinoVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPartidaVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRetornoVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(jbGuardar)))
+                        .addComponent(btnGuardarVuelos)))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnEliminarVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificarVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtbusca1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtbuscarVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(39, 39, 39))
         );
 
@@ -393,7 +442,7 @@ public final class Sistema extends javax.swing.JFrame {
 
         jLabel8.setText("TELÉFONO");
 
-        jTextID.setEditable(false);
+        jTextIdCliente.setEditable(false);
 
         jLabel16.setText("ID");
 
@@ -424,7 +473,7 @@ public final class Sistema extends javax.swing.JFrame {
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16))
                         .addGap(24, 24, 24)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -444,7 +493,7 @@ public final class Sistema extends javax.swing.JFrame {
                             .addComponent(jTextTelf, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addComponent(btnGuardarCliente)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,7 +515,7 @@ public final class Sistema extends javax.swing.JFrame {
                             .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextDirec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextTelf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(btnGuardarCliente)))
@@ -512,11 +561,11 @@ public final class Sistema extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "LOCALIDAD", "NOMBRE", "TIPO DE HABITACIÓN", "PRECIO"
+                "ID", "LOCALIDAD", "NOMBRE", "TIPO DE HABITACIÓN", "N. HABITACIÓN", "PRECIO"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -534,7 +583,7 @@ public final class Sistema extends javax.swing.JFrame {
             tblHotel.getColumnModel().getColumn(1).setPreferredWidth(100);
             tblHotel.getColumnModel().getColumn(2).setPreferredWidth(100);
             tblHotel.getColumnModel().getColumn(3).setPreferredWidth(100);
-            tblHotel.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tblHotel.getColumnModel().getColumn(5).setPreferredWidth(30);
         }
 
         btnBuscarHotel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
@@ -574,8 +623,15 @@ public final class Sistema extends javax.swing.JFrame {
         });
 
         jTextIdHotel.setEditable(false);
+        jTextIdHotel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextIdHotelActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("ID");
+
+        jLabel15.setText("N. HABITACIÓN");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -603,7 +659,7 @@ public final class Sistema extends javax.swing.JFrame {
                                 .addGap(33, 33, 33)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
-                                    .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(33, 33, 33)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
@@ -612,34 +668,51 @@ public final class Sistema extends javax.swing.JFrame {
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cmbHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13))
-                                .addGap(33, 33, 33)
+                                .addGap(22, 22, 22)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextNumeroHabitacion))
+                                .addGap(36, 36, 36)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(33, 33, 33)
-                                        .addComponent(btnGuardarHotel)))))))
-                .addContainerGap(87, Short.MAX_VALUE))
+                                        .addComponent(btnGuardarHotel))
+                                    .addComponent(jLabel14))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel10)
-                        .addComponent(jLabel11)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextIdHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardarHotel)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel14)
-                        .addComponent(jLabel12)))
-                .addGap(11, 11, 11)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextIdHotel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardarHotel))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextNumeroHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbHabitacion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -665,56 +738,83 @@ public final class Sistema extends javax.swing.JFrame {
 
         jLabel23.setText("TIPO");
 
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
-
+        jTextCodPaq.setEditable(false);
         jTextCodPaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextCodPaqActionPerformed(evt);
             }
         });
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guayaquil", "Quito" }));
+        jcomboxSalida.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jcomboxSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Guayaquil", "Quito" }));
 
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Familiar", "Relax", "Diversión", "AquaPark", "Cultural", "Aventura" }));
+        jcomboxTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jcomboxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Familiar", "Relax", "Diversión", "AquaPark", "Cultural", "Aventura" }));
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
-        jButton14.setText("Agregar");
-        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
-        jButton18.setText("Guardar");
-        jButton18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
-        jButton19.setText("Modificar");
-        jButton19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jButton20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
-        jButton20.setText("Eliminar");
-        jButton20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton20.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarPaquetes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/lupa.png"))); // NOI18N
+        btnBuscarPaquetes.setText("Agregar");
+        btnBuscarPaquetes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscarPaquetes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton20ActionPerformed(evt);
+                btnBuscarPaquetesActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        btnGuardarPaquetes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/GuardarTodo.png"))); // NOI18N
+        btnGuardarPaquetes.setText("Guardar");
+        btnGuardarPaquetes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardarPaquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPaquetesActionPerformed(evt);
+            }
+        });
+
+        btnModificarPaquetes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnModificarPaquetes.setText("Modificar");
+        btnModificarPaquetes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificarPaquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarPaquetesActionPerformed(evt);
+            }
+        });
+
+        btnEliminarPaquetes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
+        btnEliminarPaquetes.setText("Eliminar");
+        btnEliminarPaquetes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarPaquetes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarPaquetesActionPerformed(evt);
+            }
+        });
+
+        tblPaquetes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
                 "CÓDIGO", "DESTINO", "SALIDA", "DURACIÓN", "TIPO"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(100);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPaquetes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPaquetesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblPaquetes);
+        if (tblPaquetes.getColumnModel().getColumnCount() > 0) {
+            tblPaquetes.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblPaquetes.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblPaquetes.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tblPaquetes.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblPaquetes.getColumnModel().getColumn(4).setPreferredWidth(100);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -735,33 +835,33 @@ public final class Sistema extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel20)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                            .addComponent(jcomboxSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                                 .addComponent(jLabel23)
                                 .addGap(129, 129, 129))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(45, 45, 45)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcomboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jButton18))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnGuardarPaquetes))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 835, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(txtbusca4, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscaPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnBuscarPaquetes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton14)
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton19)
+                        .addComponent(btnModificarPaquetes)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton20)))
+                        .addComponent(btnEliminarPaquetes)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -773,7 +873,7 @@ public final class Sistema extends javax.swing.JFrame {
                             .addContainerGap()
                             .addComponent(jLabel21)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addGap(21, 21, 21)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -785,33 +885,39 @@ public final class Sistema extends javax.swing.JFrame {
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextCodPaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextDest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jcomboxSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jcomboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton18)))
+                        .addComponent(btnGuardarPaquetes)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton20, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton19)
-                        .addComponent(jButton14))
-                    .addComponent(txtbusca4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24))
-                .addGap(38, 38, 38))
+                        .addComponent(btnEliminarPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificarPaquetes))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtbuscaPaquetes, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarPaquetes)))
+                .addGap(36, 36, 36))
         );
 
         jTabbedPane1.addTab("Paquetes", jPanel5);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 920, 480));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 940, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        jTabbedPane1.setSelectedIndex(0);
+        LimpiarTableVuelo();
+        LimpiarVuelo();
+        ListarVuelo();
+        btnModificarVuelo.setEnabled(true);
+        btnEliminarVuelo.setEnabled(true);
+        btnGuardarVuelos.setEnabled(true);        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -819,16 +925,34 @@ public final class Sistema extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton20ActionPerformed
+    private void btnEliminarPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPaquetesActionPerformed
+        if (!"".equals(jTextCodPaq.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(jTextCodPaq.getText());
+                pqDao.EliminarPaquetes(id);
+                LimpiarTablePaquetes();
+                LimpiarPaquetes();
+                ListarPaquetes();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarPaquetesActionPerformed
 
     private void jTextCodPaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodPaqActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCodPaqActionPerformed
 
     private void btnEliminarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHotelActionPerformed
-        // TODO add your handling code here:
+        if (!"".equals(jTextIdHotel.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(jTextIdHotel.getText());
+                htldao.EliminarHoteles(id);
+                LimpiarTableHotel();
+                LimpiarHotel();
+                ListarHotel();
+            }
+        }
     }//GEN-LAST:event_btnEliminarHotelActionPerformed
 
     private void btnModificarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarHotelActionPerformed
@@ -840,6 +964,7 @@ public final class Sistema extends javax.swing.JFrame {
                 htl.setLocalidad(jTextLoc.getText());
                 htl.setNombre(jTextHotel.getText());
                 htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
+                htl.setNumeroHabitacion(Integer.parseInt(jTextNumeroHabitacion.getText()));
                 htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
                 htl.setId(Integer.parseInt(jTextIdHotel.getText()));
                 htldao.ModificarHoteles(htl);
@@ -858,6 +983,7 @@ public final class Sistema extends javax.swing.JFrame {
             htl.setLocalidad(jTextLoc.getText());
             htl.setNombre(jTextHotel.getText());
             htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
+            htl.setNumeroHabitacion(Integer.parseInt(jTextNumeroHabitacion.getText()));
             htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
             htldao.RegistrarHoteles(htl);
             JOptionPane.showMessageDialog(null, "Hotel Registrado");
@@ -879,9 +1005,13 @@ public final class Sistema extends javax.swing.JFrame {
             BuscarHotel(txtbuscaHotel.getText());
         } else{
             JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
-            LimpiarTableHotel();
+            LimpiarTableHotel();              
+            LimpiarHotel();
             ListarHotel();
         }
+        btnModificarHotel.setEnabled(true);
+        btnEliminarHotel.setEnabled(true);
+        btnGuardarHotel.setEnabled(true);
 
     }//GEN-LAST:event_btnBuscarHotelActionPerformed
 
@@ -894,7 +1024,8 @@ public final class Sistema extends javax.swing.JFrame {
         jTextLoc.setText(tblHotel.getValueAt(fila, 1).toString());
         jTextHotel.setText(tblHotel.getValueAt(fila, 2).toString());
         cmbHabitacion.setSelectedItem(tblHotel.getValueAt(fila, 3).toString());
-        jTextPrecio.setText(tblHotel.getValueAt(fila, 4).toString());
+        jTextNumeroHabitacion.setText(tblHotel.getValueAt(fila, 4).toString());
+        jTextPrecio.setText(tblHotel.getValueAt(fila, 5).toString());
     }//GEN-LAST:event_tblHotelMouseClicked
 
     private void jTextHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextHotelActionPerformed
@@ -913,16 +1044,17 @@ public final class Sistema extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "Coincidencias");
         } else{
             JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
-            LimpiarTableCliente();
+            LimpiarTableCliente();              
             ListarCliente();
+            LimpiarCliente();
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
-        if (!"".equals(jTextID.getText())) {
+        if (!"".equals(jTextIdCliente.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
             if (pregunta == 0) {
-                int id = Integer.parseInt(jTextID.getText());
+                int id = Integer.parseInt(jTextIdCliente.getText());
                 client.EliminarCliente(id);
                 LimpiarTableCliente();
                 LimpiarCliente();
@@ -932,7 +1064,7 @@ public final class Sistema extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
 
     private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
-        if ("".equals(jTextID.getText())) {
+        if ("".equals(jTextIdCliente.getText())) {
             JOptionPane.showMessageDialog(null, "seleccione una fila");
         } else {
 
@@ -941,7 +1073,7 @@ public final class Sistema extends javax.swing.JFrame {
                 cl.setNombre(jTextNombre.getText());
                 cl.setTelefono(jTextTelf.getText());
                 cl.setDireccion(jTextDirec.getText());
-                cl.setId(Integer.parseInt(jTextID.getText()));
+                cl.setId(Integer.parseInt(jTextIdCliente.getText()));
                 client.ModificarCliente(cl);
                 JOptionPane.showMessageDialog(null, "Cliente Modificado");
                 LimpiarTableCliente();
@@ -977,32 +1109,194 @@ public final class Sistema extends javax.swing.JFrame {
         btnEliminarCliente.setEnabled(true);
         btnGuardarCliente.setEnabled(false);
         int fila = tblCliente.rowAtPoint(evt.getPoint());
-        jTextID.setText(tblCliente.getValueAt(fila, 0).toString());
+        jTextIdCliente.setText(tblCliente.getValueAt(fila, 0).toString());
         jTextCed.setText(tblCliente.getValueAt(fila, 1).toString());
         jTextNombre.setText(tblCliente.getValueAt(fila, 2).toString());
         jTextDirec.setText(tblCliente.getValueAt(fila, 3).toString());
         jTextTelf.setText(tblCliente.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tblClienteMouseClicked
 
-    private void txtbusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusca1ActionPerformed
+    private void txtbuscarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbuscarVueloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtbusca1ActionPerformed
+    }//GEN-LAST:event_txtbuscarVueloActionPerformed
 
-    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+    private void btnGuardarVuelosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarVuelosActionPerformed
+        if (!"".equals(txtDestinoVuelo.getText()) || !"".equals(txtPartidaVuelo.getText()) || !"".equals(txtRetornoVuelo.getText())) {
+            vl.setDestino(txtDestinoVuelo.getText());
+            vl.setPartida(txtPartidaVuelo.getText());
+            vl.setRetorno(txtRetornoVuelo.getText());
+            vldao.RegistrarVuelos(vl);
+            JOptionPane.showMessageDialog(null, "Vuelo Registrado");
+            LimpiarTableVuelo();
+            LimpiarVuelo();
+            ListarVuelo();
+            btnModificarVuelo.setEnabled(false);
+            btnEliminarVuelo.setEnabled(false);
+            btnGuardarVuelos.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarVuelosActionPerformed
+
+    private void btnBuscarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVueloActionPerformed
+        if (!"".equals(txtbuscarVuelo.getText())) {
+            LimpiarVuelo();
+            LimpiarTableVuelo();
+            BuscarVuelo(txtbuscarVuelo.getText());
+            //JOptionPane.showMessageDialog(null, "Coincidencias");
+        } else{
+            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+            LimpiarTableVuelo();              
+            ListarVuelo();
+            LimpiarVuelo();
+        }
+    }//GEN-LAST:event_btnBuscarVueloActionPerformed
+
+    private void btnModificarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarVueloActionPerformed
+        if ("".equals(txtIdVuelo.getText())) {
+            JOptionPane.showMessageDialog(null, "seleccione una fila");
+        } else {
+
+            if (!"".equals(txtRetornoVuelo.getText()) || !"".equals(txtPartidaVuelo.getText()) || !"".equals(txtRetornoVuelo.getText())) {
+                vl.setId(Integer.parseInt(txtIdVuelo.getText()));
+                vl.setDestino(txtDestinoVuelo.getText());
+                vl.setPartida(txtPartidaVuelo.getText());
+                vl.setRetorno(txtRetornoVuelo.getText());
+                vl.setId(Integer.parseInt(txtIdVuelo.getText()));
+                vldao.ModificarVuelos(vl);
+                JOptionPane.showMessageDialog(null, "Vuelo Modificado");
+                LimpiarTableVuelo();
+                LimpiarVuelo();
+                ListarVuelo();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+        }
+    }//GEN-LAST:event_btnModificarVueloActionPerformed
+
+    private void txtIdVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdVueloActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbGuardarActionPerformed
+    }//GEN-LAST:event_txtIdVueloActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+    private void jTextIdHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIdHotelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jbModificarActionPerformed
+    }//GEN-LAST:event_jTextIdHotelActionPerformed
 
-    private void txtCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        jTabbedPane1.setSelectedIndex(1);
+        LimpiarTableCliente();
+        LimpiarCliente();
+        ListarCliente();
+        btnModificarCliente.setEnabled(true);
+        btnEliminarCliente.setEnabled(true);
+        btnGuardarCliente.setEnabled(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        jTabbedPane1.setSelectedIndex(2);
+        LimpiarTableHotel();
+        LimpiarHotel();
+        ListarHotel();
+        btnModificarHotel.setEnabled(true);
+        btnEliminarHotel.setEnabled(true);
+        btnGuardarHotel.setEnabled(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jTabbedPane1.setSelectedIndex(3);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tblVueloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVueloMouseClicked
+        btnModificarVuelo.setEnabled(true);
+        btnEliminarVuelo.setEnabled(true);
+        btnGuardarVuelos.setEnabled(false);
+        int fila = tblVuelo.rowAtPoint(evt.getPoint());
+        txtIdVuelo.setText(tblVuelo.getValueAt(fila, 0).toString());
+        txtDestinoVuelo.setText(tblVuelo.getValueAt(fila, 1).toString());
+        txtPartidaVuelo.setText(tblVuelo.getValueAt(fila, 2).toString());
+        txtRetornoVuelo.setText(tblVuelo.getValueAt(fila, 3).toString());
+    }//GEN-LAST:event_tblVueloMouseClicked
+
+    private void btnEliminarVueloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVueloActionPerformed
+        if (!"".equals(txtIdVuelo.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(txtIdVuelo.getText());
+                vldao.EliminarVuelos(id);
+                LimpiarTableVuelo();
+                LimpiarVuelo();
+                ListarVuelo();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarVueloActionPerformed
+
+    private void btnGuardarPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPaquetesActionPerformed
+        if (!"".equals(jTextDest.getText()) || !"".equals(jcomboxSalida.getSelectedItem()) || !"".equals(jTextDuracion.getText()) || !"".equals(jcomboxTipo.getSelectedItem())) {
+            pq.setDestino(jTextDest.getText());
+            pq.setSalida(jcomboxSalida.getSelectedItem().toString());
+            pq.setDuracion(Integer.parseInt(jTextDuracion.getText()));
+            pq.setTipo(jcomboxTipo.getSelectedItem().toString());
+            pqDao.RegistrarPaquete(pq);
+            JOptionPane.showMessageDialog(null, "Paquete Registrado");
+            LimpiarTablePaquetes();
+            LimpiarPaquetes();
+            ListarPaquetes();
+            btnModificarPaquetes.setEnabled(false);
+            btnEliminarPaquetes.setEnabled(false);
+            btnGuardarPaquetes.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }// TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarPaquetesActionPerformed
+
+    private void btnBuscarPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPaquetesActionPerformed
+         if (!"".equals(txtbuscaPaquetes.getText())) {
+            LimpiarPaquetes();
+            LimpiarTablePaquetes();
+            BuscarPaquetes(txtbuscaPaquetes.getText());
+        } else{
+            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+            LimpiarTableHotel();              
+            LimpiarHotel();
+            ListarHotel();
+        }
+        btnModificarPaquetes.setEnabled(true);
+        btnEliminarPaquetes.setEnabled(true);
+        btnGuardarPaquetes.setEnabled(true);
+    }//GEN-LAST:event_btnBuscarPaquetesActionPerformed
+
+    private void btnModificarPaquetesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarPaquetesActionPerformed
+        if ("".equals(jTextCodPaq.getText())) {
+            JOptionPane.showMessageDialog(null, "seleccione una fila");
+        } else {
+
+            if (!"".equals(jTextDest.getText()) || !"".equals(jcomboxSalida.getSelectedItem()) || !"".equals(jTextDuracion.getText())) {
+                pq.setDestino(jTextDest.getText());
+                pq.setSalida(jcomboxSalida.getSelectedItem().toString());
+                pq.setDuracion(Integer.parseInt(jTextDuracion.getText()));
+                pq.setTipo(jcomboxTipo.getSelectedItem().toString());
+                pqDao.ModificarPaquetes(pq);
+                JOptionPane.showMessageDialog(null, "Paquete Modificado");
+                LimpiarTablePaquetes();
+                LimpiarPaquetes();
+                ListarPaquetes();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+        }
+    }//GEN-LAST:event_btnModificarPaquetesActionPerformed
+
+    private void tblPaquetesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPaquetesMouseClicked
+        btnModificarPaquetes.setEnabled(true);
+        btnEliminarPaquetes.setEnabled(true);
+        btnGuardarPaquetes.setEnabled(false);
+        int fila = tblPaquetes.rowAtPoint(evt.getPoint());
+        jTextDest.setText(tblPaquetes.getValueAt(fila, 0).toString());
+        jcomboxSalida.setSelectedItem(tblPaquetes.getValueAt(fila, 1).toString());
+        jTextDuracion.setText(tblPaquetes.getValueAt(fila, 2).toString());
+        jcomboxTipo.setSelectedItem(tblPaquetes.getValueAt(fila, 3).toString());
+    }//GEN-LAST:event_tblPaquetesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1040,32 +1334,34 @@ public final class Sistema extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnBuscarHotel;
+    private javax.swing.JButton btnBuscarPaquetes;
+    private javax.swing.JButton btnBuscarVuelo;
     private javax.swing.JButton btnEliminarCliente;
     private javax.swing.JButton btnEliminarHotel;
+    private javax.swing.JButton btnEliminarPaquetes;
+    private javax.swing.JButton btnEliminarVuelo;
     private javax.swing.JButton btnGuardarCliente;
     private javax.swing.JButton btnGuardarHotel;
+    private javax.swing.JButton btnGuardarPaquetes;
+    private javax.swing.JButton btnGuardarVuelos;
     private javax.swing.JButton btnModificarCliente;
     private javax.swing.JButton btnModificarHotel;
+    private javax.swing.JButton btnModificarPaquetes;
+    private javax.swing.JButton btnModificarVuelo;
     private javax.swing.JComboBox<String> cmbHabitacion;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1073,7 +1369,6 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1091,33 +1386,33 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextCed;
     private javax.swing.JTextField jTextCodPaq;
     private javax.swing.JTextField jTextDest;
     private javax.swing.JTextField jTextDirec;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextDuracion;
     private javax.swing.JTextField jTextHotel;
-    private javax.swing.JTextField jTextID;
+    private javax.swing.JTextField jTextIdCliente;
     private javax.swing.JTextField jTextIdHotel;
     private javax.swing.JTextField jTextLoc;
     private javax.swing.JTextField jTextNombre;
+    private javax.swing.JTextField jTextNumeroHabitacion;
     private javax.swing.JTextField jTextPrecio;
     private javax.swing.JTextField jTextTelf;
-    private javax.swing.JButton jbEliminar;
-    private javax.swing.JButton jbGuardar;
-    private javax.swing.JButton jbModificar;
+    private javax.swing.JComboBox<String> jcomboxSalida;
+    private javax.swing.JComboBox<String> jcomboxTipo;
     private javax.swing.JTable tblCliente;
     private javax.swing.JTable tblHotel;
+    private javax.swing.JTable tblPaquetes;
     private javax.swing.JTable tblVuelo;
-    private javax.swing.JTextField txtCod;
-    private javax.swing.JTextField txtDestino;
-    private javax.swing.JTextField txtPartida;
-    private javax.swing.JTextField txtRetorno;
-    private javax.swing.JTextField txtbusca1;
-    private javax.swing.JTextField txtbusca4;
+    private javax.swing.JTextField txtDestinoVuelo;
+    private javax.swing.JTextField txtIdVuelo;
+    private javax.swing.JTextField txtPartidaVuelo;
+    private javax.swing.JTextField txtRetornoVuelo;
     private javax.swing.JTextField txtbuscaCliente;
     private javax.swing.JTextField txtbuscaHotel;
+    private javax.swing.JTextField txtbuscaPaquetes;
+    private javax.swing.JTextField txtbuscarVuelo;
     // End of variables declaration//GEN-END:variables
 
     private void LimpiarCliente() {
@@ -1125,7 +1420,7 @@ public final class Sistema extends javax.swing.JFrame {
         jTextNombre.setText("");
         jTextTelf.setText("");
         jTextDirec.setText("");
-        jTextID.setText("");
+        jTextIdCliente.setText("");
     }
     
     private void LimpiarHotel() {
@@ -1133,13 +1428,23 @@ public final class Sistema extends javax.swing.JFrame {
         jTextHotel.setText("");
         cmbHabitacion.setSelectedItem("Individual");
         jTextPrecio.setText("");
+        jTextNumeroHabitacion.setText("");
         jTextIdHotel.setText("");
+    }
+    
+    private void LimpiarVuelo() {
+       txtIdVuelo.setText("");
+       txtDestinoVuelo.setText("");
+       txtRetornoVuelo.setText("");
+       txtbuscarVuelo.setText("");
+       txtbuscarVuelo.setText("");
+               
     }
 
     private void ListarCliente() {
         List<Cliente> ListarCl = client.ListarCliente();
         modelo = (DefaultTableModel) tblCliente.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[5];
         for (int i = 0; i < ListarCl.size(); i++) {
             ob[0] = ListarCl.get(i).getId();
             ob[1] = ListarCl.get(i).getDni();
@@ -1154,7 +1459,7 @@ public final class Sistema extends javax.swing.JFrame {
     private void BuscarCliente(String buscar) {
         List<Cliente> ListarCl = client.buscarCliente(buscar);
         modelo = (DefaultTableModel) tblCliente.getModel();
-        Object[] ob = new Object[6];
+        Object[] ob = new Object[5];
         for (int i = 0; i < ListarCl.size(); i++) {
             ob[0] = ListarCl.get(i).getId();
             ob[1] = ListarCl.get(i).getDni();
@@ -1175,7 +1480,8 @@ public final class Sistema extends javax.swing.JFrame {
             ob[1] = ListarHtl.get(i).getLocalidad();
             ob[2] = ListarHtl.get(i).getNombre();
             ob[3] = ListarHtl.get(i).getHabitacion();
-            ob[4] = ListarHtl.get(i).getPrecio();
+            ob[4] = ListarHtl.get(i).getNumeroHabitacion();
+            ob[5] = ListarHtl.get(i).getPrecio();
             modelo.addRow(ob);
         }
         tblHotel.setModel(modelo);
@@ -1190,12 +1496,40 @@ public final class Sistema extends javax.swing.JFrame {
             ob[1] = ListarHtl.get(i).getLocalidad();
             ob[2] = ListarHtl.get(i).getNombre();
             ob[3] = ListarHtl.get(i).getHabitacion();
-            ob[4] = ListarHtl.get(i).getPrecio();
+            ob[4] = ListarHtl.get(i).getNumeroHabitacion();
+            ob[5] = ListarHtl.get(i).getPrecio();
             modelo.addRow(ob);
         }
         tblHotel.setModel(modelo);
     }
+
+    private void ListarVuelo() {
+        List<Vuelos> ListarVl = vldao.ListarVuelos();
+        modelo = (DefaultTableModel) tblVuelo.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < ListarVl.size(); i++) {
+            ob[0] = ListarVl.get(i).getId();
+            ob[1] = ListarVl.get(i).getDestino();
+            ob[2] = ListarVl.get(i).getPartida();
+            ob[3] = ListarVl.get(i).getRetorno();
+            modelo.addRow(ob);
+        }
+        tblVuelo.setModel(modelo);            
+    } 
     
+    private void BuscarVuelo(String buscar) {
+        List<Vuelos> ListarVl = vldao.buscarVuelos(buscar);
+        modelo = (DefaultTableModel) tblVuelo.getModel();
+        Object[] ob = new Object[4];
+        for (int i = 0; i < ListarVl.size(); i++) {
+            ob[0] = ListarVl.get(i).getId();
+            ob[1] = ListarVl.get(i).getDestino();
+            ob[2] = ListarVl.get(i).getPartida();
+            ob[3] = ListarVl.get(i).getRetorno();
+            modelo.addRow(ob);
+        }
+        tblVuelo.setModel(modelo);
+    } 
 
     private void LimpiarTableCliente() {
         DefaultTableModel modelo=(DefaultTableModel) tblCliente.getModel();
@@ -1211,5 +1545,59 @@ public final class Sistema extends javax.swing.JFrame {
             modelo.removeRow(i);
             i = i - 1;
         }
+    }
+
+    private void LimpiarTableVuelo() {
+        DefaultTableModel modelo=(DefaultTableModel) tblVuelo.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }   
+    
+    private void LimpiarTablePaquetes() {
+        DefaultTableModel modelo=(DefaultTableModel) tblPaquetes.getModel();
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i = i - 1;
+        }
+    }
+
+    private void LimpiarPaquetes() {
+        jTextDest.setText("");
+        jcomboxSalida.setSelectedItem("Guayaquil");
+        jTextDuracion.setText("");
+        jcomboxTipo.setSelectedItem("Familiar");
+        jTextCodPaq.setText("");   
+    
+    }
+
+    private void BuscarPaquetes(String buscar) {
+    List<Paquetes> ListarPq = pqDao.buscarPaquetes(buscar);
+        modelo = (DefaultTableModel) tblPaquetes.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarPq.size(); i++) {
+            ob[0] = ListarPq.get(i).getId();
+            ob[1] = ListarPq.get(i).getDestino();
+            ob[2] = ListarPq.get(i).getSalida();
+            ob[3] = ListarPq.get(i).getDuracion();
+            ob[4] = ListarPq.get(i).getTipo();
+            modelo.addRow(ob);
+        }
+        tblPaquetes.setModel(modelo);    }
+
+    private void ListarPaquetes() {
+        List<Paquetes> ListarPq = pqDao.ListarPaquetes();
+        modelo = (DefaultTableModel) tblPaquetes.getModel();
+        Object[] ob = new Object[6];
+        for (int i = 0; i < ListarPq.size(); i++) {
+            ob[0] = ListarPq.get(i).getId();
+            ob[1] = ListarPq.get(i).getDestino();
+            ob[2] = ListarPq.get(i).getSalida();
+            ob[3] = ListarPq.get(i).getDuracion();
+            ob[4] = ListarPq.get(i).getTipo();
+            modelo.addRow(ob);
+        }
+        tblPaquetes.setModel(modelo);
     }
 }

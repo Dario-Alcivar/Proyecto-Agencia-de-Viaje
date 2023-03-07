@@ -14,24 +14,23 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author UsuarioPC
+ * @author DarioA
  */
-public class HotelesDao {
+public class VueloDAO {
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     
-public boolean RegistrarHoteles(Hotel htl){
-        String sql = "INSERT INTO hoteles (localidad, nombre, habitacion, numero, precio) VALUES (?,?,?,?,?)";
+    public boolean RegistrarVuelos(Vuelos vl){
+        String sql = "insert into vuelos (id, destino, partida, retorno) VALUES (?,?,?,?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, htl.getLocalidad());
-            ps.setString(2, htl.getNombre());
-            ps.setString(3, htl.getHabitacion());
-            ps.setInt(4, htl.getNumeroHabitacion());
-            ps.setFloat(5, htl.getPrecio());
+            ps.setInt(1, vl.getId());
+            ps.setString(2, vl.getDestino());
+            ps.setString(3, vl.getPartida());
+            ps.setString(4, vl.getRetorno());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -46,31 +45,29 @@ public boolean RegistrarHoteles(Hotel htl){
         }
     }
     
-   public List ListarHoteles(){
-       List<Hotel> ListaHtl = new ArrayList();
-       String sql = "SELECT * FROM hoteles";
+   public List ListarVuelos(){
+       List<Vuelos> ListaVl = new ArrayList();
+       String sql = "select * from vuelos";
        try {
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
            rs = ps.executeQuery();
-           while (rs.next()) {               
-               Hotel htl = new Hotel();
-               htl.setId(rs.getInt("id"));
-               htl.setLocalidad(rs.getString("localidad"));
-               htl.setNombre(rs.getString("nombre"));
-               htl.setHabitacion(rs.getString("habitacion"));
-               htl.setNumeroHabitacion(rs.getInt("numero"));
-               htl.setPrecio(rs.getFloat("precio"));
-               ListaHtl.add(htl);
+           while (rs.next()) {          
+               Vuelos vl = new Vuelos();
+               vl.setId(rs.getInt("id"));
+               vl.setDestino(rs.getString("destino"));
+               vl.setPartida(rs.getString("partida"));
+               vl.setRetorno(rs.getString("retorno"));
+               ListaVl.add(vl);
            }
        } catch (SQLException e) {
            System.out.println(e.toString());
        }
-       return ListaHtl;
+       return ListaVl;
    }
    
-   public boolean EliminarHoteles(int id){
-       String sql = "DELETE FROM hoteles WHERE id = ?";
+   public boolean EliminarVuelos(int id){
+       String sql = "delete from vuelos where id = ?";
        try {
            ps = con.prepareStatement(sql);
            ps.setInt(1, id);
@@ -88,16 +85,15 @@ public boolean RegistrarHoteles(Hotel htl){
        }
    }
    
-   public boolean ModificarHoteles(Hotel htl){
-       String sql = "update hoteles set localidad=?, nombre=?, habitacion=?, precio=?, numero=? WHERE id=?";
+   public boolean ModificarVuelos(Vuelos vl){
+       String sql = "update vuelos set id=?, destino=?, partida=?, retorno=? where id=?";
        try {
            ps = con.prepareStatement(sql);   
-           ps.setString(1, htl.getLocalidad());
-           ps.setString(2, htl.getNombre());
-           ps.setString(3, htl.getHabitacion());
-           ps.setFloat(4, htl.getPrecio());
-           ps.setInt(5, htl.getNumeroHabitacion());
-           ps.setInt(6, htl.getId());
+           ps.setInt(1, vl.getId());
+           ps.setString(2, vl.getDestino());
+           ps.setString(3, vl.getPartida());
+           ps.setString(4, vl.getRetorno());
+           ps.setInt(5, vl.getId());
            ps.execute();
            return true;
        } catch (SQLException e) {
@@ -111,27 +107,25 @@ public boolean RegistrarHoteles(Hotel htl){
            }
        }
    }
-   
-   public List<Hotel> BuscarHoteles(String buscar){       
-       List<Hotel> ListaHtl = new ArrayList();
-       String sql = "SELECT * FROM hoteles WHERE localidad like '%" +buscar+"%' or habitacion like '%"+buscar+"%'";
+     
+   public List<Vuelos> buscarVuelos(String buscar){
+       List<Vuelos> ListaVl = new ArrayList();
+       String sql = "select * from vuelos where partida like '%" +buscar+ "%' or destino like '%" +buscar+ "%'";       
        try {
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
            rs = ps.executeQuery();
            while (rs.next()) {               
-               Hotel htl = new Hotel();
-               htl.setId(rs.getInt("id"));
-               htl.setLocalidad(rs.getString("localidad"));
-               htl.setNombre(rs.getString("nombre"));
-               htl.setHabitacion(rs.getString("habitacion"));
-               htl.setNumeroHabitacion(rs.getInt("numero"));
-               htl.setPrecio(rs.getFloat("precio"));
-               ListaHtl.add(htl);
+               Vuelos vl = new Vuelos();
+               vl.setId(rs.getInt("id"));
+               vl.setDestino(rs.getString("destino"));
+               vl.setPartida(rs.getString("partida"));
+               vl.setRetorno(rs.getString("retorno"));
+               ListaVl.add(vl);
            }
        } catch (SQLException e) {
            System.out.println(e.toString());
        }
-       return ListaHtl;
-   }   
+       return ListaVl;
+   }
 }
