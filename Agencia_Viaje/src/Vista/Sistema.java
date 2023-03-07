@@ -75,7 +75,7 @@ public final class Sistema extends javax.swing.JFrame {
         btnGuardarCliente = new javax.swing.JButton();
         btnModificarCliente = new javax.swing.JButton();
         btnEliminarCliente = new javax.swing.JButton();
-        txtbusca2 = new javax.swing.JTextField();
+        txtbuscaCliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextCed = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -102,7 +102,7 @@ public final class Sistema extends javax.swing.JFrame {
         btnGuardarHotel = new javax.swing.JButton();
         btnModificarHotel = new javax.swing.JButton();
         btnEliminarHotel = new javax.swing.JButton();
-        txtbusca3 = new javax.swing.JTextField();
+        txtbuscaHotel = new javax.swing.JTextField();
         jTextIdHotel = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -136,6 +136,11 @@ public final class Sistema extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/avion.png"))); // NOI18N
         jButton1.setText("  Vuelos");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -409,7 +414,7 @@ public final class Sistema extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(txtbusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscarCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -475,7 +480,7 @@ public final class Sistema extends javax.swing.JFrame {
                             .addComponent(btnEliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtbusca2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -580,7 +585,7 @@ public final class Sistema extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(txtbusca3, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscaHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscarHotel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -643,7 +648,7 @@ public final class Sistema extends javax.swing.JFrame {
                         .addComponent(btnEliminarHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnModificarHotel))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtbusca3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtbuscaHotel, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscarHotel)))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -809,141 +814,22 @@ public final class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnEliminarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHotelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarHotelActionPerformed
-
-    private void jTextHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextHotelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextHotelActionPerformed
-
-    private void cmbHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHabitacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbHabitacionActionPerformed
-
-    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbGuardarActionPerformed
-
-    private void txtCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodActionPerformed
-
-    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbModificarActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void jTextCodPaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodPaqActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextCodPaqActionPerformed
+        
+    }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
-        if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText()) || !"".equals(jTextDirec.getText())) {
-            cl.setDni(Integer.parseInt(jTextCed.getText()));
-            cl.setNombre(jTextNombre.getText());
-            cl.setTelefono(jTextTelf.getText());
-            cl.setDireccion(jTextDirec.getText());
-            client.RegistrarCliente(cl);
-            JOptionPane.showMessageDialog(null, "Cliente Registrado");
-            LimpiarTableCliente();
-            LimpiarCliente();
-            ListarCliente();
-            btnModificarCliente.setEnabled(false);
-            btnEliminarCliente.setEnabled(false);
-            btnGuardarCliente.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
-        }
-    }//GEN-LAST:event_btnGuardarClienteActionPerformed
-
-    private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
-        if ("".equals(jTextID.getText())) {
-            JOptionPane.showMessageDialog(null, "seleccione una fila");
-        } else {
-
-            if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText())) {
-                cl.setDni(Integer.parseInt(jTextCed.getText()));
-                cl.setNombre(jTextNombre.getText());
-                cl.setTelefono(jTextTelf.getText());
-                cl.setDireccion(jTextDirec.getText());
-                cl.setId(Integer.parseInt(jTextID.getText()));
-                client.ModificarCliente(cl);
-                JOptionPane.showMessageDialog(null, "Cliente Modificado");
-                LimpiarTableCliente();
-                LimpiarCliente();
-                ListarCliente();
-            } else {
-                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
-            }
-        }
-    }//GEN-LAST:event_btnModificarClienteActionPerformed
-
-    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
-        if (!"".equals(jTextID.getText())) {
-            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
-            if (pregunta == 0) {
-                int id = Integer.parseInt(jTextID.getText());
-                client.EliminarCliente(id);
-                LimpiarTableCliente();
-                LimpiarCliente();
-                ListarCliente();
-            }
-        }
-    }//GEN-LAST:event_btnEliminarClienteActionPerformed
-
-    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
-        btnModificarCliente.setEnabled(true);
-        btnEliminarCliente.setEnabled(true);
-        btnGuardarCliente.setEnabled(false);
-        int fila = tblCliente.rowAtPoint(evt.getPoint());
-        jTextID.setText(tblCliente.getValueAt(fila, 0).toString());
-        jTextCed.setText(tblCliente.getValueAt(fila, 1).toString());
-        jTextNombre.setText(tblCliente.getValueAt(fila, 2).toString());
-        jTextDirec.setText(tblCliente.getValueAt(fila, 3).toString());
-        jTextTelf.setText(tblCliente.getValueAt(fila, 4).toString());        
-    }//GEN-LAST:event_tblClienteMouseClicked
-
-    private void txtbusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusca1ActionPerformed
+    private void jTextCodPaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextCodPaqActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtbusca1ActionPerformed
+    }//GEN-LAST:event_jTextCodPaqActionPerformed
 
-    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-        if (!"".equals(txtbusca2.getText())) {      
-            LimpiarCliente();
-            LimpiarTableCliente();            
-            BuscarCliente(txtbusca2.getText());
-            //JOptionPane.showMessageDialog(null, "Coincidencias");
-        } else{
-            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
-        }
-    }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
-    private void btnGuardarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarHotelActionPerformed
-        if (!"".equals(jTextLoc.getText()) || !"".equals(jTextHotel.getText()) || !"".equals(cmbHabitacion.getSelectedItem()) || !"".equals(jTextPrecio.getText())) {
-            htl.setLocalidad(jTextLoc.getText());
-            htl.setNombre(jTextHotel.getText());
-            htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
-            htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
-            htldao.RegistrarHoteles(htl);
-            JOptionPane.showMessageDialog(null, "Hotel Registrado");
-            LimpiarTableHotel();
-            LimpiarHotel();
-            ListarHotel();
-            btnModificarHotel.setEnabled(false);
-            btnEliminarHotel.setEnabled(false);
-            btnGuardarHotel.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
-        }
-    }//GEN-LAST:event_btnGuardarHotelActionPerformed
+    private void btnEliminarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHotelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarHotelActionPerformed
 
     private void btnModificarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarHotelActionPerformed
         if ("".equals(jTextIdHotel.getText())) {
@@ -967,6 +853,38 @@ public final class Sistema extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarHotelActionPerformed
 
+    private void btnGuardarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarHotelActionPerformed
+        if (!"".equals(jTextLoc.getText()) || !"".equals(jTextHotel.getText()) || !"".equals(cmbHabitacion.getSelectedItem()) || !"".equals(jTextPrecio.getText())) {
+            htl.setLocalidad(jTextLoc.getText());
+            htl.setNombre(jTextHotel.getText());
+            htl.setHabitacion(cmbHabitacion.getSelectedItem().toString());
+            htl.setPrecio(Float.parseFloat(jTextPrecio.getText()));
+            htldao.RegistrarHoteles(htl);
+            JOptionPane.showMessageDialog(null, "Hotel Registrado");
+            LimpiarTableHotel();
+            LimpiarHotel();
+            ListarHotel();
+            btnModificarHotel.setEnabled(false);
+            btnEliminarHotel.setEnabled(false);
+            btnGuardarHotel.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarHotelActionPerformed
+
+    private void btnBuscarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHotelActionPerformed
+        if (!"".equals(txtbuscaHotel.getText())) {
+            LimpiarHotel();
+            LimpiarTableHotel();
+            BuscarHotel(txtbuscaHotel.getText());
+        } else{
+            JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+            LimpiarTableHotel();
+            ListarHotel();
+        }
+
+    }//GEN-LAST:event_btnBuscarHotelActionPerformed
+
     private void tblHotelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHotelMouseClicked
         btnModificarHotel.setEnabled(true);
         btnEliminarHotel.setEnabled(true);
@@ -979,16 +897,112 @@ public final class Sistema extends javax.swing.JFrame {
         jTextPrecio.setText(tblHotel.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tblHotelMouseClicked
 
-    private void btnBuscarHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHotelActionPerformed
-        if (!"".equals(txtbusca3.getText())) {
-        LimpiarHotel();
-        LimpiarTableHotel();
-        BuscarHotel(txtbusca3.getText());
+    private void jTextHotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextHotelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextHotelActionPerformed
+
+    private void cmbHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbHabitacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbHabitacionActionPerformed
+
+    private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        if (!"".equals(txtbuscaCliente.getText())) {
+            LimpiarCliente();
+            LimpiarTableCliente();
+            BuscarCliente(txtbuscaCliente.getText());
+            //JOptionPane.showMessageDialog(null, "Coincidencias");
         } else{
             JOptionPane.showMessageDialog(null, "Ingrese un criterio de busqueda");
+            LimpiarTableCliente();
+            ListarCliente();
         }
-        
-    }//GEN-LAST:event_btnBuscarHotelActionPerformed
+    }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
+        if (!"".equals(jTextID.getText())) {
+            int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
+            if (pregunta == 0) {
+                int id = Integer.parseInt(jTextID.getText());
+                client.EliminarCliente(id);
+                LimpiarTableCliente();
+                LimpiarCliente();
+                ListarCliente();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void btnModificarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarClienteActionPerformed
+        if ("".equals(jTextID.getText())) {
+            JOptionPane.showMessageDialog(null, "seleccione una fila");
+        } else {
+
+            if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText())) {
+                cl.setDni(Integer.parseInt(jTextCed.getText()));
+                cl.setNombre(jTextNombre.getText());
+                cl.setTelefono(jTextTelf.getText());
+                cl.setDireccion(jTextDirec.getText());
+                cl.setId(Integer.parseInt(jTextID.getText()));
+                client.ModificarCliente(cl);
+                JOptionPane.showMessageDialog(null, "Cliente Modificado");
+                LimpiarTableCliente();
+                LimpiarCliente();
+                ListarCliente();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+        }
+    }//GEN-LAST:event_btnModificarClienteActionPerformed
+
+    private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
+        if (!"".equals(jTextCed.getText()) || !"".equals(jTextNombre.getText()) || !"".equals(jTextTelf.getText()) || !"".equals(jTextDirec.getText())) {
+            cl.setDni(Integer.parseInt(jTextCed.getText()));
+            cl.setNombre(jTextNombre.getText());
+            cl.setTelefono(jTextTelf.getText());
+            cl.setDireccion(jTextDirec.getText());
+            client.RegistrarCliente(cl);
+            JOptionPane.showMessageDialog(null, "Cliente Registrado");
+            LimpiarTableCliente();
+            LimpiarCliente();
+            ListarCliente();
+            btnModificarCliente.setEnabled(false);
+            btnEliminarCliente.setEnabled(false);
+            btnGuardarCliente.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+        }
+    }//GEN-LAST:event_btnGuardarClienteActionPerformed
+
+    private void tblClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClienteMouseClicked
+        btnModificarCliente.setEnabled(true);
+        btnEliminarCliente.setEnabled(true);
+        btnGuardarCliente.setEnabled(false);
+        int fila = tblCliente.rowAtPoint(evt.getPoint());
+        jTextID.setText(tblCliente.getValueAt(fila, 0).toString());
+        jTextCed.setText(tblCliente.getValueAt(fila, 1).toString());
+        jTextNombre.setText(tblCliente.getValueAt(fila, 2).toString());
+        jTextDirec.setText(tblCliente.getValueAt(fila, 3).toString());
+        jTextTelf.setText(tblCliente.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tblClienteMouseClicked
+
+    private void txtbusca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtbusca1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtbusca1ActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void txtCodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1101,9 +1115,9 @@ public final class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtPartida;
     private javax.swing.JTextField txtRetorno;
     private javax.swing.JTextField txtbusca1;
-    private javax.swing.JTextField txtbusca2;
-    private javax.swing.JTextField txtbusca3;
     private javax.swing.JTextField txtbusca4;
+    private javax.swing.JTextField txtbuscaCliente;
+    private javax.swing.JTextField txtbuscaHotel;
     // End of variables declaration//GEN-END:variables
 
     private void LimpiarCliente() {

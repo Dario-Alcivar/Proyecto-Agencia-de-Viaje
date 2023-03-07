@@ -86,6 +86,7 @@
             <Property name="text" type="java.lang.String" value="  Vuelos"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
@@ -385,7 +386,7 @@
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="txtbusca2" min="-2" pref="255" max="-2" attributes="0"/>
+                              <Component id="txtbuscaCliente" min="-2" pref="255" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnBuscarCliente" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -470,7 +471,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtbusca2" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="txtbuscaCliente" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="btnBuscarCliente" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -578,7 +579,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarClienteActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtbusca2">
+            <Component class="javax.swing.JTextField" name="txtbuscaCliente">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -650,7 +651,7 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="txtbusca3" min="-2" pref="255" max="-2" attributes="0"/>
+                              <Component id="txtbuscaHotel" min="-2" pref="255" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btnBuscarHotel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -730,7 +731,7 @@
                               <Component id="btnModificarHotel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtbusca3" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                              <Component id="txtbuscaHotel" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="btnBuscarHotel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -900,7 +901,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarHotelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtbusca3">
+            <Component class="javax.swing.JTextField" name="txtbuscaHotel">
             </Component>
             <Component class="javax.swing.JTextField" name="jTextIdHotel">
               <Properties>

@@ -112,7 +112,7 @@ public class ClienteDao {
    
    public List<Cliente> buscarCliente(String buscar){
        List<Cliente> ListaCl2 = new ArrayList();
-       String sql = "select * from clientes where nombre like '%" +buscar+"%' or direccion like '%"+buscar+"%'";       
+       String sql = "select * from clientes where nombre like '%" +buscar+ "%' or direccion like '%" +buscar+ "%'";       
        try {
            con = cn.getConnection();
            ps = con.prepareStatement(sql);

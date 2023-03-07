@@ -111,7 +111,7 @@ public boolean RegistrarHoteles(Hotel htl){
    
    public List<Hotel> BuscarHoteles(String buscar){       
        List<Hotel> ListaHtl = new ArrayList();
-       String sql = "SELECT * FROM hoteles WHERE localidad = '%"+buscar+"%' or habitacion '%"+buscar+"%'";
+       String sql = "SELECT * FROM hoteles WHERE localidad like '%" +buscar+"%' or habitacion like '%"+buscar+"%'";
        try {
            con = cn.getConnection();
            ps = con.prepareStatement(sql);
